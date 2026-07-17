@@ -1,0 +1,13 @@
+{
+  "name": "man-bangkalan",
+  "version": "1.0.0",
+  "description": "MAN Bangkalannpm - Website Profil Sekolah",
+  "scripts": {
+    "build": "echo 'Build complete - static files ready'",
+    "start": "npx serve dist -l 80",
+    "dev": "npx serve . -l 80"
+  },
+  "keywords": ["school", "education", "islamic"],
+  "author": "MAN Bangkalan",
+  "license": "ISC"
+}

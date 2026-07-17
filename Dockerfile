@@ -1,18 +1,32 @@
+# Build stage - untuk development/build di Dokploy
+FROM node:18-alpine as builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source files  
+COPY . .
+
+# Build (untuk project lain, tambahkan perintah build di sini)
+# Untuk static site, ini hanya memastikan file siap
+RUN ls -la
+
+# Production stage
 FROM nginx:alpine
 
-# Copy custom nginx config
+# Copy nginx config
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Copy application files
-COPY index.html /usr/share/nginx/html/
-COPY pages/404.html /usr/share/nginx/html/404.html
-COPY assets/ /usr/share/nginx/html/assets/
+# Copy all files to nginx html folder
+COPY . /usr/share/nginx/html/
 
-# Expose port 80
+# Expose port
 EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost/health || exit 1
-
+# Nginx serve
 CMD ["nginx", "-g", "daemon off;"]
