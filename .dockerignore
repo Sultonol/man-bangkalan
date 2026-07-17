@@ -4,8 +4,5 @@
 .env
 .env.*
 node_modules
-npm-debug.log*
 Dockerfile*
-compose*.yaml
-deploy-dokploy.sh
 README.md

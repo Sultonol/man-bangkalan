@@ -56,7 +56,6 @@ man-bangkalan/
 ├── nginx/
 │   └── default.conf       # Konfigurasi Nginx
 ├── Dockerfile             # Konfigurasi Docker
-├── compose.yaml           # Docker Compose
 └── README.md              # Dokumentasi ini
 ```
 
@@ -72,22 +71,6 @@ man-bangkalan/
 6. Aktifkan HTTPS/Let's Encrypt, kemudian klik **Deploy**.
 
 Project ini tidak membutuhkan environment variable. Endpoint health check tersedia di `/health` dan sudah didefinisikan langsung di image.
-
-### Menggunakan Docker Compose (Disarankan)
-
-```bash
-# Clone atau masuk ke folder project
-cd /opt/data/projects/man-bangkalan
-
-# Build dan jalankan container
-docker compose up -d --build
-
-# Cek status container
-docker compose ps
-
-# Lihat logs
-docker compose logs -f
-```
 
 ### Menggunakan Docker Langsung
 
@@ -134,9 +117,7 @@ Tidak ada environment variable yang diperlukan untuk project ini.
 ## 📋 Requirements
 
 - Docker >= 20.10
-- Docker Compose >= 1.29
--atau-
-- Nginx >= 1.18
+- Nginx >= 1.18 (hanya jika dijalankan tanpa Docker)
 
 ## 🧪 Testing
 
@@ -144,10 +125,10 @@ Tidak ada environment variable yang diperlukan untuk project ini.
 
 ```bash
 # Via curl
-curl http://localhost/health
+curl http://localhost:8080/health
 
 # Via docker
-docker exec man-bangkalan-web wget --spider http://localhost/health
+docker exec man-bangkalan wget --spider http://127.0.0.1/health
 ```
 
 ### Validasi HTML/CSS/JS
@@ -157,7 +138,7 @@ docker exec man-bangkalan-web wget --spider http://localhost/health
 docker ps | grep man-bangkalan
 
 # Check nginx logs
-docker logs man-bangkalan-web
+docker logs man-bangkalan
 ```
 
 ## 📝 Catatan
