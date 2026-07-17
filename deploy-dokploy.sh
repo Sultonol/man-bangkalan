@@ -1,24 +1,26 @@
-#!/bin/bash
-# Dokploy Deployment Script for MAN Bangkalannpm
+#!/usr/bin/env sh
+set -eu
 
-echo "🚀 Deploying MAN Bangkalannpm..."
+# Local Docker deployment helper. Dokploy builds the Dockerfile directly.
+
+echo "🚀 Deploying MAN Bangkalan..."
 
 # Configuration
 APP_NAME="man-bangkalan-profile"
 IMAGE="man-bangkalan:latest"
-PORT=80
+PORT="${APP_PORT:-8080}"
 
 echo "📦 Building Docker image..."
-docker build -t $IMAGE .
+docker build -t "$IMAGE" .
 
 echo "🐳 Running container..."
-docker stop $APP_NAME 2>/dev/null || true
-docker rm $APP_NAME 2>/dev/null || true
+docker stop "$APP_NAME" 2>/dev/null || true
+docker rm "$APP_NAME" 2>/dev/null || true
 docker run -d \
-    --name $APP_NAME \
-    -p $PORT:80 \
+    --name "$APP_NAME" \
+    -p "$PORT:80" \
     --restart unless-stopped \
-    $IMAGE
+    "$IMAGE"
 
 echo "✅ Deployment complete!"
 echo "🌐 App running on port $PORT"

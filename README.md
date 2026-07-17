@@ -62,6 +62,17 @@ man-bangkalan/
 
 ## 🚀 Cara Install & Run
 
+### Deploy ke Dokploy (Dockerfile)
+
+1. Push repository ini ke GitHub/GitLab/Gitea yang dapat diakses Dokploy.
+2. Di Dokploy, buat **Application** baru lalu pilih repository tersebut.
+3. Pilih build type **Dockerfile**.
+4. Isi Dockerfile path dengan `Dockerfile` dan context path dengan `.`.
+5. Tambahkan domain pada tab **Domains**, lalu arahkan ke container port `80`.
+6. Aktifkan HTTPS/Let's Encrypt, kemudian klik **Deploy**.
+
+Project ini tidak membutuhkan environment variable. Endpoint health check tersedia di `/health` dan sudah didefinisikan langsung di image.
+
 ### Menggunakan Docker Compose (Disarankan)
 
 ```bash
@@ -69,13 +80,13 @@ man-bangkalan/
 cd /opt/data/projects/man-bangkalan
 
 # Build dan jalankan container
-docker-compose up -d
+docker compose up -d --build
 
 # Cek status container
-docker-compose ps
+docker compose ps
 
 # Lihat logs
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ### Menggunakan Docker Langsung
@@ -85,7 +96,7 @@ docker-compose logs -f
 docker build -t man-bangkalan:latest .
 
 # Jalankan container
-docker run -d -p 80:80 --name man-bangkalan man-bangkalan:latest
+docker run -d -p 8080:80 --name man-bangkalan man-bangkalan:latest
 ```
 
 ### Tanpa Docker (Manual)

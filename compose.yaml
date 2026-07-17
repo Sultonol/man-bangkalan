@@ -1,21 +1,14 @@
-version: '3.8'
-
 services:
   web:
-    build: .
-    container_name: man-bangkalan-web
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "${APP_PORT:-8080}:80"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1/health"]
       interval: 30s
       timeout: 3s
       retries: 3
-      start_period: 10s
-    networks:
-      - web
-
-networks:
-  web:
-    driver: bridge
+      start_period: 5s
